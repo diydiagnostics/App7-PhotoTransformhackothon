@@ -104,7 +104,9 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
       drawImageIOSFix(secondCtx,img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, 600, 500); //draw og image onto second canvas
       var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
       var data = imageData.data;
-      var totalPositive = 0;
+      var totalPink = 0;
+      var totalYellow = 0;
+      var totalPixels = data.length / 4;
       for (var i = 0; i < data.length; i+=4) { //loop for changing each pixel
         var r = data[i];
         var g = data[i+1];
