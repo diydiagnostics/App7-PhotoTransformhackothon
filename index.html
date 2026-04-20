@@ -141,8 +141,8 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
       var ratio = (totalPink / totalPixels) * 100;
       messageDisplayArea.innerHTML = "Analysis complete: " + ratio.toFixed(2) + "% positive.";
       }; // end of img.onload
-  img.src = reader.result;
-} //  end of reader.onload
+      img.src = reader.result;
+      }//  end of reader.onload
       
       reader.readAsDataURL(file);
     } // end of the if statement checking that file is an image
