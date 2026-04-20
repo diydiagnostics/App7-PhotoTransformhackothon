@@ -133,13 +133,8 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
       }  
       console.log("Image processed"); //javascript debugging console
       secondCtx.putImageData(imageData, 0, 0);//display data on 2nd console
-      var totalPink = data.length / 4;
-      var totalYellow = (yellowCount / totalPixels) * 100;
-
-      secondCtx.putImageData(imageData, 0, 0);//show up on canvas
-
-      var ratio = (totalPink / totalPixels) * 100;
-      messageDisplayArea.innerHTML = "Analysis complete: " + ratio.toFixed(2) + "% positive.";
+      var pinkRatio = (totalPink / totalPixels) * 100;
+      messageDisplayArea.innerHTML = "Analysis complete: " + pinkRatio.toFixed(2) + "% positive.";
       }; // end of img.onload
       img.src = reader.result;
       }//  end of reader.onload
