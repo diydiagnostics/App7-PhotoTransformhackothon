@@ -14,7 +14,7 @@
  
   Authors in chronological order of contribution:
   Author 1: Timothy E. Riedel
-  Author 2: Sanya Fuambu
+  Author 2: Manha S, Sabah P, Robbie T, Shreyshi M, Sanya F, Kelly L, Pearl U
   added my name as an author 
   
   References:
@@ -26,7 +26,7 @@
   
   Brief Description of Goal of Code:
   Create an app that can do basic photo analysis. This app will allow for an image to be uploaded on one canvas then transfered to another canvas with a blue filter over it.
-short description of the goal of the code based on the assignment information 
+  short description of the goal of the code based on the assignment information 
  
   Known Issues:
   The known issues are this only allows for basic photo analysis and cant be used as a tool for diagnose based on the image that is uploaded.
@@ -96,54 +96,25 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
         /* new Image() and img.onload start some kind of new image creation process in javaScript. I do not understand why this is necessary although it may simply slow things down to let the image load. */
         var img = new Image();
       img.onload = function() {
-  /* This finally draws the image onto the first drawing canvas. */
-  drawImageIOSFix(context, img,
-    0, 0, img.naturalWidth, img.naturalHeight,
-    0, 0, 600, 500);
-
+      /* This finally draws the image onto the first drawing canvas. */
+      drawImageIOSFix(context, img,0, 0, img.naturalWidth, img.naturalHeight, 0, 600, 500);
   /*  +++++++++++++++ BEGIN IMAGE PROCESSING +++++++++++++++ */
   /* PUT ANY CHANGES TO THE JAVASCRIPT HERE  */
 
-  // get the image data from the original image in canvas 1
-  var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-  var data = imageData.data; // this is an array: [R, G, B, A, R, G, B, A,...]
-  // the data will hold all the pixels and will help grab the pixel data from canvas 1
-
-  // gets the second canvas and its context
-  var blueCanvas = document.getElementById("blueCanvas");
-  var blueCtx = blueCanvas.getContext("2d");
-
-  // make the second canvas the same size as the first one 
-  blueCanvas.width = canvas.width;
-  blueCanvas.height = canvas.height;
-
-  // loop through every pixel and keep only the blue intensity
-  for (var i = 0; i < data.length; i += 4) {
-    var red   = data[i];     // R
-    var green = data[i + 1]; // G
-    var blue  = data[i + 2]; // B
-    var alpha = data[i + 3]; // A
-
-    // remove the red and green colors but keep the blue
-    data[i]     = 0;    // R = 0
-    data[i + 1] = 0;    // G = 0
-    data[i + 2] = blue; // B stays the same
-    // alpha stays the same
-  }
-
-  // put the changed pixels into the second canvas
-  blueCtx.putImageData(imageData, 0, 0);
-       
-console.log("Image loaded, starting drawing and blue processing");
-console.log("Blue-only image drawn on second canvas");
-       //console logs for debugging and no error
-  /*  ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-}; // end of img.onload
-
-        
-        
-        img.src = reader.result;
-      } //  end of reader.onload
+      drawImageIOSFix(secondCtx,img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, 600, 500); //draw og image onto second canvas
+      var imageData = secondCtx.getImageData(0, 0, 600, 500); //get image pixel data
+      var data = imageData.data;
+      for (var i = 0; i < data.length; i+=4) { //loop for changing each pixel
+        data [i] = 0; //red turned to 0
+        data [i+1] = 0; //green turned to 0
+        //blue not changed
+      }
+      console.log("Image processed"); //javascript debugging console
+      secondCtx.putImageData(imageData, 0, 0);
+      
+      }; // end of img.onload
+img.src = reader.result;
+} //  end of reader.onload
       
       reader.readAsDataURL(file);
     } // end of the if statement checking that file is an image
@@ -170,27 +141,19 @@ console.log("Blue-only image drawn on second canvas");
       <div id="messageDisplayArea"></div>
       <!-- this is the first page with the orginal image-->
       <canvas id="myCanvas" width=600 height=500 style="border:1px solid #d3d3d3;"></canvas>
+      <canvas id="dataCanvas" width="600" height="500" style="border:1px solid #d3d3d3;"></canvas> <!--second canvas-->
       <script> /* This script initiates the cavas and puts the text on the canvas "myCanvas" */
         var canvas = document.getElementById('myCanvas');
         var context = canvas.getContext("2d");
         context.font = '20pt Calibri';
         context.fillStyle = "black";
         context.fillText("Original image will go here", 10, 20);
+        var secondCanvas = document.getElementById('dataCanvas'); //second canvas
+        var secondCtx = secondCanvas.getContext("2d");
+        secondCtx.font = '20pt Calibri';
+        secondCtx.fillStyle = "black";
+        secondCtx.fillText("Modified image will go here", 10, 20); //brief identifying text
       </script>
-
-     <canvas id="blueCanvas" width="600" height="500"></canvas> 
-     <!-- Second canvas for blue-only images -->
-<script>
-  // using this to put some starting text on the second canvas I just added
-  var blueCanvas = document.getElementById("blueCanvas");
-  var blueCtx = blueCanvas.getContext("2d");
-  blueCtx.font = "20px Calibri";
-  blueCtx.fillStyle = "black";
-  blueCtx.textAlign = "center";
-  // adding text and ensureing the text is in the center, has black text, and is 20px so it can easily be read 
-  blueCtx.fillText("Blue Intensity Image", blueCanvas.width / 2, blueCanvas.height / 2);
- // code will start with Blue Intensity Image writen on it 
-</script>
      
 
     </div><!-- /content -->
