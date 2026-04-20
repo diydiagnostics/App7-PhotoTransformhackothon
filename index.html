@@ -35,7 +35,7 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
 
  <head>
   <meta charset="utf-8">
-  <title>LAMP Result Analysis</title>
+  <title>App 8</title>
   <meta name="viewport" content="width=device-width, initial-scale=.7">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="stylesheet" href="https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
@@ -135,6 +135,15 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
       secondCtx.putImageData(imageData, 0, 0);//display data on 2nd console
       var pinkRatio = (totalPink / totalPixels) * 100;
       messageDisplayArea.innerHTML = "Analysis complete: " + pinkRatio.toFixed(2) + "% positive.";
+
+      if (ratio > 5) {
+        messageDisplayArea.style.color = "green";
+        messageDisplayArea.innerHTML += " (POSITIVE)";
+      } else {
+        messageDisplayArea.style.color = "red";
+        messageDisplayArea.innerHTML += " (NEGATIVE)";
+      }
+
       }; // end of img.onload
       img.src = reader.result;
       }//  end of reader.onload
