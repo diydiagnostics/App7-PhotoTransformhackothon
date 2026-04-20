@@ -132,10 +132,11 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
         }
       }  
       console.log("Image processed"); //javascript debugging console
-      secondCtx.putImageData(imageData, 0, 0);//display data on 2nd console
-      var pinkRatio = (totalPink / totalPixels) * 100;
 
-      if (pinkRatio > 5) {
+      secondCtx.putImageData(imageData, 0, 0);//display data on 2nd console
+
+      var ratio = (totalYellow / totalPixels) * 100;
+      if (ratio > 5) {
         messageDisplayArea.style.color = "green";
         messageDisplayArea.innerHTML += "(POSITIVE)";
       } else {
