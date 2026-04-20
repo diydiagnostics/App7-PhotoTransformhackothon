@@ -117,14 +117,14 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
           data[i] = 255; //yellow red
           data[i + 1] = 255; //yellow green
           data[i + 2] = 0; //no blue
-          totalPink++;
+          totalYellow++;
         }
         //pink means it is negative
         else if (r > 150 && b > 100 && g < 160) {
           data[i] = 255; //pink red
           data[i + 1] = 80; //low green
           data[i + 2] = 180; //high blue
-          totalYellow++;
+          totalPink++;
         }
         else {
           var avg = (r + g + b) / 3;
@@ -137,10 +137,10 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
 
       if (pinkRatio > 5) {
         messageDisplayArea.style.color = "green";
-        messageDisplayArea.innerHTML += " (POSITIVE)";
+        messageDisplayArea.innerHTML += "(POSITIVE)";
       } else {
         messageDisplayArea.style.color = "red";
-        messageDisplayArea.innerHTML += " (NEGATIVE)";
+        messageDisplayArea.innerHTML += "(NEGATIVE)";
       }
 
       }; // end of img.onload
