@@ -102,12 +102,23 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
       /* PUT ANY CHANGES TO THE JAVASCRIPT HERE  */
 
       drawImageIOSFix(secondCtx,img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, 600, 500); //draw og image onto second canvas
-      var imageData = secondCtx.getImageData(0, 0, 600, 500); //get image pixel data
+      var imageData = ontext.getImageData(0, 0, canvas.width, canvas.height);
       var data = imageData.data;
+      var totalGreen = 0;
       for (var i = 0; i < data.length; i+=4) { //loop for changing each pixel
-        data [i] = 0; //red turned to 0
-        data [i+1] = 0; //green turned to 0
-        //blue not changed
+        var r = data[i];
+        var g = data[i+1];
+        var b = data[i+2];
+
+        //check if green is dominant color on rgb scale
+        if (g > r && g > b){
+          data[i] = 0; //red
+          data[i+1] = g; //green showing positive result
+          data[i+2] = 0; //blue
+        } else {
+          var avg = (r + g + b) / 3;
+          data[i] = data[i + 1] = data [i + 2] = avg / 5
+        }
       }
       console.log("Image processed"); //javascript debugging console
       secondCtx.putImageData(imageData, 0, 0);
