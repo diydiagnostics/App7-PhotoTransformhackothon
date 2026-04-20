@@ -102,27 +102,38 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
       /* PUT ANY CHANGES TO THE JAVASCRIPT HERE  */
 
       drawImageIOSFix(secondCtx,img, 0, 0, img.naturalWidth, img.naturalHeight, 0, 0, 600, 500); //draw og image onto second canvas
-      var imageData = ontext.getImageData(0, 0, canvas.width, canvas.height);
+      var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
       var data = imageData.data;
-      var totalGreen = 0;
+      var totalPositive = 0;
       for (var i = 0; i < data.length; i+=4) { //loop for changing each pixel
         var r = data[i];
         var g = data[i+1];
         var b = data[i+2];
 
-        //check if green is dominant color on rgb scale
-        if (g > r && g > b){
-          data[i] = 0; //red
-          data[i+1] = g; //green showing positive result
-          data[i+2] = 0; //blue
-        } else {
-          var avg = (r + g + b) / 3;
-          data[i] = data[i + 1] = data [i + 2] = avg / 5
+        //yellow means it is positive
+        if (r > 150 && g > 150 && b < 150) {
+          data[i] = 255; //yellow red
+          data[i + 1] = 255; //yellow green
+          data[i + 2] = 0; //no blue
+          totalPositive++;
         }
-      }
+        //pink means it is negative
+        else if (r > 150 && b > 100 && g < 160) {
+          data[i] = 255; //pink red
+          data[i + 1] = 80; //low green
+          data[i + 2] = 180; //high blue
+        }
+        else {
+          var avg = (r + g + b) / 3;
+          data[i] = data[i + 1] = data[i + 2] = avg / 5; //darken everything else
+        }
+        
       console.log("Image processed"); //javascript debugging console
-      secondCtx.putImageData(imageData, 0, 0);
-      
+      secondCtx.putImageData(imageData, 0, 0);//display data on 2nd console
+      var totalPink = data.length / 4;
+      var totalYellow = (yellowCount / totalPixels) * 100;
+      var pinkRatio = (pinkCount / totalPixels) * 100;
+
       }; // end of img.onload
   img.src = reader.result;
 } //  end of reader.onload
