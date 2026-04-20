@@ -113,7 +113,7 @@ replaced blah, blah, blah with the known issues of this app which is its limitat
         var b = data[i+2];
 
         //yellow means it is positive
-        if (r > 150 && g > 150 && b < 150) {
+        if (r > 180 && g > 180 && b < 120 && Math.abs(r - g) < 50) {
           data[i] = 255; //yellow red
           data[i + 1] = 255; //yellow green
           data[i + 2] = 0; //no blue
